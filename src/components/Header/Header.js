@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 const Header = (props) => {
     const { title, children, type } = props;
@@ -8,7 +8,9 @@ const Header = (props) => {
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {type == 'library' ? <Image style={styles.avatar} source={require('../../assets/avatar.png')} /> : null}
+                {type == 'library' ? (
+                    <Image style={styles.avatar} source={require('../../../assets/avatar.png')} />
+                ) : null}
                 <Text style={styles.title}>{title}</Text>
             </View>
             <View style={styles.wrapper}>{children}</View>

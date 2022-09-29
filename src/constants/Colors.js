@@ -14,7 +14,9 @@ export default {
         text: '#fff',
         textGray: '#a7a7a7',
         background: '#121212',
+        backgroundGray: '#2a2a2a',
         tabIconDefault: '#b3b3b3',
         tabIconSelected: '#fff',
+        green: '#1eb856',
     },
 };

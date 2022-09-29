@@ -3,7 +3,7 @@ import React from 'react';
 import { Feather, AntDesign } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 
 const Library = () => {
     return (
