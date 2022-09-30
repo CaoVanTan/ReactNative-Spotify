@@ -1,33 +1,41 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
+import { useNavigation } from '@react-navigation/native';
 
 const Album = (props) => {
-    const { type, data, style, size } = props;
+    const { data, style, size } = props;
+    const navigation = useNavigation();
 
     return (
-        <View style={[styles.container, style, type == 'program' ? { borderRadius: 16 } : null]}>
-            <Image
-                style={[
-                    { width: size, height: size, marginBottom: 8 },
-                    type == 'program' ? { borderRadius: 12 } : null,
-                ]}
-                source={data.imageUri}
-            />
-            {type == 'program' ? (
-                <Text style={[styles.job, { width: size }]} numberOfLines={1} ellipsizeMode="tail">
-                    {data.job}
+        <TouchableHighlight
+            activeOpacity={0.7}
+            underlayColor={Colors.dark.background}
+            onPress={() =>
+                navigation.navigate('Album', {
+                    id: data.id,
+                    title: data.name,
+                })
+            }
+        >
+            <View style={[styles.container, style]}>
+                <Image style={{ width: size, height: size, marginBottom: 8 }} source={data.imageUri} />
+                {data.job && (
+                    <Text style={[styles.job, { width: size }]} numberOfLines={1} ellipsizeMode="tail">
+                        {data.job}
+                    </Text>
+                )}
+                {data.name && (
+                    <Text style={[styles.name, { width: size }]} numberOfLines={1} ellipsizeMode="tail">
+                        {data.name}
+                    </Text>
+                )}
+                <Text style={[styles.artist, { width: size }]} numberOfLines={2} ellipsizeMode="tail">
+                    {/* Hiện •  */}
+                    {data.artists || data.author}
                 </Text>
-            ) : null}
-            {type == 'playlist' ? null : (
-                <Text style={[styles.name, { width: size }]} numberOfLines={1} ellipsizeMode="tail">
-                    {data.name}
-                </Text>
-            )}
-            <Text style={[styles.artist, { width: size }]} numberOfLines={2} ellipsizeMode="tail">
-                {data.artists || data.author}
-            </Text>
-        </View>
+            </View>
+        </TouchableHighlight>
     );
 };
 
@@ -46,12 +54,12 @@ const styles = StyleSheet.create({
     },
     name: {
         color: 'white',
-        fontSize: 14,
+        fontSize: 13,
         fontWeight: 'bold',
+        marginBottom: 4,
     },
     artist: {
         color: Colors.dark.textGray,
-        fontSize: 14,
-        flex: 1,
+        fontSize: 13,
     },
 });
