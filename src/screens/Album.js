@@ -1,6 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import Colors from '../constants/Colors';
 import AlbumDetails from '../data/AlbumDetails';
@@ -10,17 +11,20 @@ import AlbumHeader from '../components/AlbumHeader/AlbumHeader';
 
 const Album = (props) => {
     const route = useRoute();
-    const navigation = useNavigation();
     const { title } = route.params;
 
     return (
         <View style={styles.container}>
-            <HeaderBack title={title} navigation={navigation} />
             <FlatList
                 data={AlbumDetails.songs}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => <SongItem song={item} />}
-                ListHeaderComponent={() => <AlbumHeader />}
+                ListHeaderComponent={() => (
+                    <LinearGradient colors={['#535353', '#121212']}>
+                        <HeaderBack title={title} />
+                        <AlbumHeader />
+                    </LinearGradient>
+                )}
             />
         </View>
     );

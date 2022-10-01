@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, Feather, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
-import Home from '../screens/Home';
+import HomeNavigator from './HomeNavigator';
 import Search from '../screens/Search';
 import Library from '../screens/Library';
 import Premium from '../screens/Premium';
@@ -37,7 +37,7 @@ const BottomTabNavigator = () => {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={Home} options={{ headerShown: false, title: 'Trang chủ' }} />
+            <Tab.Screen name="Home" component={HomeNavigator} options={{ headerShown: false, title: 'Trang chủ' }} />
             <Tab.Screen name="Search" component={Search} options={{ headerShown: false, title: 'Tìm kiếm' }} />
             <Tab.Screen name="Library" component={Library} options={{ headerShown: false, title: 'Thư viện' }} />
             <Tab.Screen name="Premium" component={Premium} options={{ headerShown: false, title: 'Premium' }} />

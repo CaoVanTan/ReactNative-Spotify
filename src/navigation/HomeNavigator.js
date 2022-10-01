@@ -2,24 +2,32 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import BottomTabNavigator from './BottomTabNavigator';
 import Album from '../screens/Album';
+import Home from '../screens/Home';
+import SearchPlaylist from '../screens/SearchPlaylist';
 
 const Stack = createNativeStackNavigator();
 
-const RootNavigator = () => {
+const HomeNavigator = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Root"
-                component={BottomTabNavigator}
+                name="HomeScreen"
+                component={Home}
                 options={{
                     headerShown: false,
                 }}
             />
             <Stack.Screen
-                name="Album"
+                name="AlbumScreen"
                 component={Album}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="SearchPlaylistScreen"
+                component={SearchPlaylist}
                 options={{
                     headerShown: false,
                 }}
@@ -28,6 +36,6 @@ const RootNavigator = () => {
     );
 };
 
-export default RootNavigator;
+export default HomeNavigator;
 
 const styles = StyleSheet.create({});

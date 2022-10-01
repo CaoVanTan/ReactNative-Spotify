@@ -64,11 +64,13 @@ const Home = ({ navigation }) => {
                     />
                 </View>
 
-                <FlatList
-                    keyExtractor={(item) => item.id}
-                    data={albumCategories}
-                    renderItem={({ item }) => <AlbumCategory title={item.title} albums={item.albums} />}
-                />
+                <View style={styles.wrapper}>
+                    <FlatList
+                        keyExtractor={(item) => item.id}
+                        data={albumCategories}
+                        renderItem={({ item }) => <AlbumCategory title={item.title} albums={item.albums} />}
+                    />
+                </View>
             </ScrollView>
         </View>
     );

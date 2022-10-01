@@ -12,7 +12,7 @@ const Album = (props) => {
             activeOpacity={0.7}
             underlayColor={Colors.dark.background}
             onPress={() =>
-                navigation.navigate('Album', {
+                navigation.navigate('AlbumScreen', {
                     id: data.id,
                     title: data.name,
                 })

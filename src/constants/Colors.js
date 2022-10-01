@@ -16,6 +16,7 @@ export default {
         background: '#121212',
         backgroundHeader: '#3e3e3e',
         backgroundGray: '#2a2a2a',
+        backgroundWidget: '#444444',
         tabIconDefault: '#b3b3b3',
         tabIconSelected: '#fff',
         green: '#1eb856',

@@ -12,17 +12,40 @@ import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/
 
 import AlbumDetails from '../../data/AlbumDetails';
 import Colors from '../../constants/Colors';
+import Search from '../Search/Search';
+import Button from '../Button/Button';
+import { useNavigation } from '@react-navigation/native';
 
 const AlbumHeader = () => {
+    const navigation = useNavigation();
     const [favourite, setFavourite] = useState(false);
     const [play, setPlay] = useState(false);
 
+    const text = AlbumDetails.artist.slice(-22);
+    const artist = AlbumDetails.artist.slice(0, -22);
+
     return (
         <View style={styles.container}>
+            <View style={{ flexDirection: 'row' }}>
+                <Search
+                    type="disable"
+                    placeholder="Tìm trong danh sách phát"
+                    onPress={() => navigation.navigate('SearchPlaylistScreen')}
+                />
+                <Button
+                    style={{ marginLeft: 8 }}
+                    type="square"
+                    title="Sắp xếp"
+                    onPress={() => console.log('Clicked!')}
+                />
+            </View>
             <View style={styles.image}>
                 <Image style={{ width: 200, height: 200 }} source={AlbumDetails.imageUri} />
             </View>
-            <Text style={styles.artists}>{AlbumDetails.artist}</Text>
+            <Text style={styles.artists}>
+                {artist}
+                <Text style={{ color: Colors.dark.textGray, fontSize: 14 }}>{text}</Text>
+            </Text>
             <Text style={styles.text}>
                 Dành riêng cho <Text style={{ color: Colors.dark.text, fontWeight: '500' }}>Cao Văn Tân</Text>
             </Text>
@@ -43,6 +66,7 @@ const AlbumHeader = () => {
                 </View>
 
                 <TouchableHighlight
+                    style={{ borderRadius: 52 }}
                     activeOpacity={0.7}
                     underlayColor={Colors.dark.background}
                     onPress={() => setPlay(!play)}
@@ -69,7 +93,8 @@ const styles = StyleSheet.create({
     image: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 16,
+        marginTop: 36,
+        marginBottom: 16,
     },
     artists: {
         color: Colors.dark.text,
@@ -97,6 +122,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.dark.green,
-        borderRadius: 56,
+        borderRadius: 52,
     },
 });
