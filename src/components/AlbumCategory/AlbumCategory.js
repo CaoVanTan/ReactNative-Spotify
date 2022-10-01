@@ -4,10 +4,10 @@ import React from 'react';
 import Album from '../Album/Album';
 
 const AlbumCategory = (props) => {
-    const { title, albums } = props;
+    const { title, albums, style } = props;
 
     return (
-        <View style={styles.wrapper}>
+        <View style={[styles.wrapper, style]}>
             <Text style={styles.title}>{title}</Text>
             <FlatList
                 horizontal

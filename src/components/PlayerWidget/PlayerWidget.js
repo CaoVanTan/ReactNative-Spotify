@@ -1,14 +1,60 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
-import Slider from '@react-native-community/slider';
+import { Audio } from 'expo-av';
 
 import Colors from '../../constants/Colors';
 
-const PlayerWidget = (props) => {
-    const { song } = props;
+const PlayerWidget = () => {
     const [favourite, setFavourite] = useState(false);
-    const [play, setPlay] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [sound, setSound] = useState(undefined);
+    const [duration, setDuration] = useState(undefined);
+    const [position, setPosition] = useState(undefined);
+
+    const song = {
+        id: 1,
+        name: 'Waiting For You',
+        uri: require('../../../assets/music/WaitingForYou-MONOOnion.mp3'),
+        imageUri: require('../../../assets/songs/WaitingForYou.jpg'),
+        artist: 'MONO',
+    };
+
+    const onPlaybackStatusUpdate = (status) => {
+        setIsPlaying(status.isPlaying);
+        setDuration(status.durationMillis);
+        setPosition(status.positionMillis);
+    };
+
+    const playCurrentSong = async () => {
+        if (sound) {
+            await sound.unloadAsync();
+        }
+        const { sound } = await Audio.Sound.createAsync(song.uri, { shouldPlay: isPlaying }, onPlaybackStatusUpdate);
+        setSound(sound);
+        await sound.playAsync();
+    };
+
+    const onPlayPausePress = async () => {
+        if (!song) {
+            return;
+        }
+
+        if (isPlaying) {
+            await sound.stopAsync();
+        } else {
+            playCurrentSong();
+        }
+    };
+
+    const getProgress = () => {
+        if (sound === undefined || position === undefined || duration === undefined) {
+            return 0;
+        }
+
+        return (position / duration) * 100;
+    };
+
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={song.imageUri} />
@@ -32,12 +78,13 @@ const PlayerWidget = (props) => {
                         <AntDesign name="hearto" size={24} color={Colors.dark.text} />
                     )}
                 </TouchableOpacity>
+
                 <TouchableOpacity
                     style={{ marginHorizontal: 12, width: 22, justifyContent: 'center', alignItems: 'center' }}
                     activeOpacity={0.4}
-                    onPress={() => setPlay(!play)}
+                    onPress={onPlayPausePress}
                 >
-                    {play ? (
+                    {isPlaying ? (
                         <Ionicons name="pause" size={22} color={Colors.dark.text} />
                     ) : (
                         <FontAwesome name="play" size={22} color={Colors.dark.text} />
@@ -45,15 +92,7 @@ const PlayerWidget = (props) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.timeline}>
-                <Slider
-                    style={{ width: '100%', height: 1 }}
-                    minimumValue={0}
-                    maximumValue={100}
-                    minimumTrackTintColor="#fff"
-                    maximumTrackTintColor="#000"
-                />
-            </View>
+            <View style={[styles.progress, { width: `${getProgress()}%` }]} />
         </View>
     );
 };
@@ -101,11 +140,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    timeline: {
+    progress: {
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        marginHorizontal: -8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 2,
+        marginHorizontal: 8,
+        backgroundColor: 'white',
     },
 });

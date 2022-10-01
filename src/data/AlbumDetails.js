@@ -20,6 +20,7 @@ export default {
         {
             id: 3,
             name: 'Waiting For You',
+            uri: '../../assets/music/WaitingForYou-MONOOnionn-7733882.mp3',
             imageUri: require('../../assets/songs/WaitingForYou.jpg'),
             artist: 'MONO',
         },

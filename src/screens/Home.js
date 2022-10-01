@@ -27,51 +27,55 @@ const Home = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <StatusBar barStyle={'default'} />
+            <StatusBar barStyle={'default'} />
 
-                <Header title="Chào buổi sáng">
-                    {notification ? <View style={styles.badges}></View> : null}
-                    <TouchableOpacity activeOpacity={0.4}>
-                        <Feather style={{ marginRight: 10 }} name="bell" size={28} color="white" />
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.4}>
-                        <Feather style={{ marginHorizontal: 10 }} name="clock" size={28} color="white" />
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.4}>
-                        <AntDesign style={{ marginLeft: 10 }} name="setting" size={28} color="white" />
-                    </TouchableOpacity>
-                </Header>
-
-                {/* Button */}
-                <View style={styles.wrapper}>
-                    <FlatList
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => item.id}
-                        data={buttons}
-                        renderItem={({ item }) => (
-                            <Button
-                                type="round"
-                                style={[
-                                    item.id == 1 ? { marginLeft: 16 } : null,
-                                    item.id == buttons.length ? { marginRight: 16 } : null,
-                                ]}
-                                title={item.title}
-                                onPress={item.onPress}
+            <View style={styles.wrapper}>
+                <FlatList
+                    // style={{ marginBottom: 64 }}
+                    keyExtractor={(item) => item.id}
+                    data={albumCategories}
+                    renderItem={({ item }) => (
+                        <AlbumCategory
+                            style={item.id == albumCategories.length + 1 ? { marginBottom: 78 } : null}
+                            title={item.title}
+                            albums={item.albums}
+                        />
+                    )}
+                    ListHeaderComponent={() => (
+                        <View style={styles.wrapper}>
+                            <Header title="Chào buổi sáng">
+                                {notification ? <View style={styles.badges}></View> : null}
+                                <TouchableOpacity activeOpacity={0.4}>
+                                    <Feather style={{ marginRight: 10 }} name="bell" size={28} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity activeOpacity={0.4}>
+                                    <Feather style={{ marginHorizontal: 10 }} name="clock" size={28} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity activeOpacity={0.4}>
+                                    <AntDesign style={{ marginLeft: 10 }} name="setting" size={28} color="white" />
+                                </TouchableOpacity>
+                            </Header>
+                            <FlatList
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                keyExtractor={(item) => item.id}
+                                data={buttons}
+                                renderItem={({ item }) => (
+                                    <Button
+                                        type="round"
+                                        style={[
+                                            item.id == 1 ? { marginLeft: 16 } : null,
+                                            item.id == buttons.length ? { marginRight: 16 } : null,
+                                        ]}
+                                        title={item.title}
+                                        onPress={item.onPress}
+                                    />
+                                )}
                             />
-                        )}
-                    />
-                </View>
-
-                <View style={styles.wrapper}>
-                    <FlatList
-                        keyExtractor={(item) => item.id}
-                        data={albumCategories}
-                        renderItem={({ item }) => <AlbumCategory title={item.title} albums={item.albums} />}
-                    />
-                </View>
-            </ScrollView>
+                        </View>
+                    )}
+                />
+            </View>
         </View>
     );
 };
@@ -95,4 +99,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#4688d6',
         zIndex: 1,
     },
+    wrapper: {},
 });
