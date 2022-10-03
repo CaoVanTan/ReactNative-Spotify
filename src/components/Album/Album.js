@@ -1,7 +1,8 @@
 import { Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import React from 'react';
-import Colors from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+
+import Colors from '../../constants/Colors';
 
 const Album = (props) => {
     const { data, style, size } = props;
@@ -15,6 +16,10 @@ const Album = (props) => {
                 navigation.navigate('AlbumScreen', {
                     id: data.id,
                     title: data.name,
+                    imageUri: data.imageUri,
+                    artists: data.artists,
+                    time: data.time,
+                    songs: data.songs,
                 })
             }
         >

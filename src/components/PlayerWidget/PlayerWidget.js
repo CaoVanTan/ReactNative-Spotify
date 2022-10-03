@@ -1,11 +1,13 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
 import Colors from '../../constants/Colors';
 import { AppContext } from '../../../AppContext';
 import AlbumDetails from '../../data/AlbumDetails';
+import ModalPlayer from '../ModalPlayer/ModalPlayer';
+import AlbumCategories from '../../data/AlbumCategories';
 
 const PlayerWidget = () => {
     const [favourite, setFavourite] = useState(false);
@@ -15,6 +17,7 @@ const PlayerWidget = () => {
     const [position, setPosition] = useState(undefined);
     const [song, setSong] = useState(null);
     const { songId, setSongId } = useContext(AppContext);
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         return sound
@@ -25,7 +28,7 @@ const PlayerWidget = () => {
     }, [sound]);
 
     useEffect(() => {
-        AlbumDetails.songs.map((item) => {
+        AlbumDetails.map((item) => {
             if (item.id === songId) {
                 setSong(item);
                 return item;
@@ -81,43 +84,49 @@ const PlayerWidget = () => {
     // }, [getProgress()]);
 
     return song ? (
-        <View style={styles.container}>
-            <Image style={styles.image} source={song.imageUri} />
-            <View style={styles.wrapper}>
-                <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-                    {song.name}
-                </Text>
-                <Text style={styles.artist} numberOfLines={1} ellipsizeMode="tail">
-                    {song.artist}
-                </Text>
-            </View>
-            <View style={styles.wrapperAction}>
-                <TouchableOpacity
-                    style={{ marginHorizontal: 12 }}
-                    activeOpacity={0.4}
-                    onPress={() => setFavourite(!favourite)}
-                >
-                    {favourite ? (
-                        <AntDesign name="heart" size={24} color={Colors.dark.green} />
-                    ) : (
-                        <AntDesign name="hearto" size={24} color={Colors.dark.text} />
-                    )}
-                </TouchableOpacity>
+        <View>
+            <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
+                <View style={styles.container}>
+                    <Image style={styles.image} source={song.imageUri} />
+                    <View style={styles.wrapper}>
+                        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+                            {song.name}
+                        </Text>
+                        <Text style={styles.artist} numberOfLines={1} ellipsizeMode="tail">
+                            {song.artist}
+                        </Text>
+                    </View>
+                    <View style={styles.wrapperAction}>
+                        <TouchableOpacity
+                            style={{ marginHorizontal: 12 }}
+                            activeOpacity={0.4}
+                            onPress={() => setFavourite(!favourite)}
+                        >
+                            {favourite ? (
+                                <AntDesign name="heart" size={24} color={Colors.dark.green} />
+                            ) : (
+                                <AntDesign name="hearto" size={24} color={Colors.dark.text} />
+                            )}
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={{ marginHorizontal: 12, width: 22, justifyContent: 'center', alignItems: 'center' }}
-                    activeOpacity={0.4}
-                    onPress={onPlayPausePress}
-                >
-                    {isPlaying ? (
-                        <Ionicons name="pause" size={22} color={Colors.dark.text} />
-                    ) : (
-                        <FontAwesome name="play" size={22} color={Colors.dark.text} />
-                    )}
-                </TouchableOpacity>
-            </View>
+                        <TouchableOpacity
+                            style={{ marginHorizontal: 12, width: 22, justifyContent: 'center', alignItems: 'center' }}
+                            activeOpacity={0.4}
+                            onPress={onPlayPausePress}
+                        >
+                            <Entypo
+                                name={isPlaying ? 'controller-paus' : 'controller-play'}
+                                size={24}
+                                color={Colors.dark.text}
+                            />
+                        </TouchableOpacity>
+                    </View>
 
-            <View style={[styles.progress, { width: `${getProgress()}%` }]} />
+                    <View style={[styles.progress, { width: `${getProgress()}%` }]} />
+                </View>
+            </TouchableWithoutFeedback>
+
+            <ModalPlayer song={song} visible={modalVisible} setModalVisible={setModalVisible} />
         </View>
     ) : null;
 };

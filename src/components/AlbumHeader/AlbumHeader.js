@@ -1,24 +1,16 @@
-import {
-    Image,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
-import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 
-import AlbumDetails from '../../data/AlbumDetails';
 import Colors from '../../constants/Colors';
 import Search from '../Search/Search';
 import Button from '../Button/Button';
 import { AppContext } from '../../../AppContext';
 
-const AlbumHeader = () => {
+const AlbumHeader = (props) => {
+    const { imageUri, artists, time } = props;
     const navigation = useNavigation();
     const [favourite, setFavourite] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -26,8 +18,8 @@ const AlbumHeader = () => {
     // const [song, setSong] = useState(null);
     // const { songId, setSongId } = useContext(AppContext);
 
-    const text = AlbumDetails.artist.slice(-22);
-    const artist = AlbumDetails.artist.slice(0, -22);
+    const text = artists.slice(-22);
+    const artist = artists.slice(0, -22);
 
     // useEffect(() => {
     //     return sound
@@ -91,7 +83,7 @@ const AlbumHeader = () => {
                 />
             </View>
             <View style={styles.image}>
-                <Image style={{ width: 200, height: 200 }} source={AlbumDetails.imageUri} />
+                <Image style={{ width: 200, height: 200 }} source={imageUri} />
             </View>
             <Text style={styles.artists}>
                 {artist}
@@ -100,7 +92,7 @@ const AlbumHeader = () => {
             <Text style={styles.text}>
                 Dành riêng cho <Text style={{ color: Colors.dark.text, fontWeight: '500' }}>Cao Văn Tân</Text>
             </Text>
-            <Text style={styles.text}>{AlbumDetails.time}</Text>
+            {time ? <Text style={styles.text}>{time}</Text> : null}
 
             <View style={styles.wrapper}>
                 <View style={styles.wrapperLeft}>
@@ -116,20 +108,13 @@ const AlbumHeader = () => {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableHighlight
-                    style={{ borderRadius: 52 }}
-                    activeOpacity={0.7}
-                    underlayColor={Colors.dark.background}
-                    // onPress={onPlayPausePress}
+                <TouchableOpacity
+                    style={styles.wrapperRight}
+                    activeOpacity={0.6}
+                    onPress={() => setIsPlaying(!isPlaying)}
                 >
-                    <View style={styles.wrapperRight}>
-                        {isPlaying ? (
-                            <Ionicons name="pause" size={24} color="black" />
-                        ) : (
-                            <FontAwesome style={{ marginLeft: 4 }} name="play" size={24} color="black" />
-                        )}
-                    </View>
-                </TouchableHighlight>
+                    <Entypo name={isPlaying ? 'controller-paus' : 'controller-play'} size={24} color="black" />
+                </TouchableOpacity>
             </View>
         </View>
     );

@@ -2,7 +2,7 @@ import { FlatList, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View } f
 import React, { useState } from 'react';
 import { Feather, AntDesign } from '@expo/vector-icons';
 
-import albumCategories from '../data/AlbumCategories';
+import AlbumCategories from '../data/AlbumCategories';
 import Colors from '../constants/Colors';
 import Header from '../components/Header/Header';
 import Album from '../components/Album/Album';
@@ -33,10 +33,10 @@ const Home = ({ navigation }) => {
                 <FlatList
                     // style={{ marginBottom: 64 }}
                     keyExtractor={(item) => item.id}
-                    data={albumCategories}
+                    data={AlbumCategories}
                     renderItem={({ item }) => (
                         <AlbumCategory
-                            style={item.id == albumCategories.length + 1 ? { marginBottom: 78 } : null}
+                            style={item.id == AlbumCategories.length + 1 ? { marginBottom: 78 } : null}
                             title={item.title}
                             albums={item.albums}
                         />

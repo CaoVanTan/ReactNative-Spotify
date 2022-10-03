@@ -26,7 +26,7 @@ const SongItem = (props) => {
                         {song.name}
                     </Text>
                     <Text style={styles.artist} numberOfLines={1} ellipsizeMode="tail">
-                        {song.artist}
+                        {song.artists}
                     </Text>
                 </View>
                 <TouchableOpacity activeOpacity={0.4}>
