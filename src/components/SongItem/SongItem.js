@@ -1,27 +1,39 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Colors from '../../constants/Colors';
+import { AppContext } from '../../../AppContext';
 
 const SongItem = (props) => {
     const { song } = props;
+    const { songId, setSongId } = useContext(AppContext);
+
+    const onPlay = () => {
+        setSongId(song.id);
+    };
 
     return (
-        <View style={styles.container}>
-            <Image style={styles.image} source={song.imageUri} />
-            <View style={styles.wrapper}>
-                <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-                    {song.name}
-                </Text>
-                <Text style={styles.artist} numberOfLines={1} ellipsizeMode="tail">
-                    {song.artist}
-                </Text>
+        <TouchableOpacity activeOpacity={0.7} onPress={onPlay}>
+            <View style={styles.container}>
+                <Image style={styles.image} source={song.imageUri} />
+                <View style={styles.wrapper}>
+                    <Text
+                        style={[styles.name, songId == song.id ? { color: Colors.dark.green } : null]}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {song.name}
+                    </Text>
+                    <Text style={styles.artist} numberOfLines={1} ellipsizeMode="tail">
+                        {song.artist}
+                    </Text>
+                </View>
+                <TouchableOpacity activeOpacity={0.4}>
+                    <MaterialCommunityIcons name="dots-vertical" size={24} color={Colors.dark.textGray} />
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity activeOpacity={0.4}>
-                <MaterialCommunityIcons name="dots-vertical" size={24} color={Colors.dark.textGray} />
-            </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
     );
 };
 

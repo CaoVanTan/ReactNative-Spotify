@@ -7,22 +7,73 @@ import {
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AntDesign, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Audio } from 'expo-av';
 
 import AlbumDetails from '../../data/AlbumDetails';
 import Colors from '../../constants/Colors';
 import Search from '../Search/Search';
 import Button from '../Button/Button';
-import { useNavigation } from '@react-navigation/native';
+import { AppContext } from '../../../AppContext';
 
 const AlbumHeader = () => {
     const navigation = useNavigation();
     const [favourite, setFavourite] = useState(false);
-    const [play, setPlay] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    // const [sound, setSound] = useState(undefined);
+    // const [song, setSong] = useState(null);
+    // const { songId, setSongId } = useContext(AppContext);
 
     const text = AlbumDetails.artist.slice(-22);
     const artist = AlbumDetails.artist.slice(0, -22);
+
+    // useEffect(() => {
+    //     return sound
+    //         ? () => {
+    //               sound.unloadAsync();
+    //           }
+    //         : undefined;
+    // }, [sound]);
+
+    // useEffect(() => {
+    //     AlbumDetails.songs.map((item) => {
+    //         if (item.id === songId) {
+    //             setSong(item);
+    //             return item;
+    //         }
+    //     });
+    // }, [songId]);
+
+    // useEffect(() => {
+    //     if (song) {
+    //         playCurrentSong();
+    //     }
+    // }, [song]);
+
+    // const onPlaybackStatusUpdate = (status) => {
+    //     setIsPlaying(status.isPlaying);
+    // };
+
+    // const playCurrentSong = async () => {
+    //     const { sound } = await Audio.Sound.createAsync(song.uri, { shouldPlay: isPlaying }, onPlaybackStatusUpdate);
+    //     setSound(sound);
+    //     await sound.playAsync();
+    // };
+
+    // const onPlayPausePress = async () => {
+    //     setSongId(1);
+    //     if (!sound) {
+    //         return;
+    //     }
+
+    //     if (isPlaying) {
+    //         await sound.stopAsync();
+    //     } else {
+    //         playCurrentSong();
+    //     }
+    // };
 
     return (
         <View style={styles.container}>
@@ -69,10 +120,10 @@ const AlbumHeader = () => {
                     style={{ borderRadius: 52 }}
                     activeOpacity={0.7}
                     underlayColor={Colors.dark.background}
-                    onPress={() => setPlay(!play)}
+                    // onPress={onPlayPausePress}
                 >
                     <View style={styles.wrapperRight}>
-                        {play ? (
+                        {isPlaying ? (
                             <Ionicons name="pause" size={24} color="black" />
                         ) : (
                             <FontAwesome style={{ marginLeft: 4 }} name="play" size={24} color="black" />

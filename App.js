@@ -1,15 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet } from 'react-native';
-import PlayerWidget from './src/components/PlayerWidget/PlayerWidget';
+import { useState } from 'react';
 
+import { AppContext } from './AppContext';
+import PlayerWidget from './src/components/PlayerWidget/PlayerWidget';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
-// import AlbumDetails from './src/data/AlbumDetails';
 
 export default function App() {
+    const [songId, setSongId] = useState(null);
+
     return (
-        <NavigationContainer>
-            <BottomTabNavigator />
-            <PlayerWidget />
-        </NavigationContainer>
+        <AppContext.Provider
+            value={{
+                songId,
+                setSongId: (id) => setSongId(id),
+            }}
+        >
+            <NavigationContainer>
+                <BottomTabNavigator />
+                <PlayerWidget />
+            </NavigationContainer>
+        </AppContext.Provider>
     );
 }

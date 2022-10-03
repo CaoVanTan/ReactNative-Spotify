@@ -1,9 +1,11 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AntDesign, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
 import Colors from '../../constants/Colors';
+import { AppContext } from '../../../AppContext';
+import AlbumDetails from '../../data/AlbumDetails';
 
 const PlayerWidget = () => {
     const [favourite, setFavourite] = useState(false);
@@ -11,14 +13,31 @@ const PlayerWidget = () => {
     const [sound, setSound] = useState(undefined);
     const [duration, setDuration] = useState(undefined);
     const [position, setPosition] = useState(undefined);
+    const [song, setSong] = useState(null);
+    const { songId, setSongId } = useContext(AppContext);
 
-    const song = {
-        id: 1,
-        name: 'Waiting For You',
-        uri: require('../../../assets/music/WaitingForYou-MONOOnion.mp3'),
-        imageUri: require('../../../assets/songs/WaitingForYou.jpg'),
-        artist: 'MONO',
-    };
+    useEffect(() => {
+        return sound
+            ? () => {
+                  sound.unloadAsync();
+              }
+            : undefined;
+    }, [sound]);
+
+    useEffect(() => {
+        AlbumDetails.songs.map((item) => {
+            if (item.id === songId) {
+                setSong(item);
+                return item;
+            }
+        });
+    }, [songId]);
+
+    useEffect(() => {
+        if (song) {
+            playCurrentSong();
+        }
+    }, [song]);
 
     const onPlaybackStatusUpdate = (status) => {
         setIsPlaying(status.isPlaying);
@@ -27,16 +46,13 @@ const PlayerWidget = () => {
     };
 
     const playCurrentSong = async () => {
-        if (sound) {
-            await sound.unloadAsync();
-        }
         const { sound } = await Audio.Sound.createAsync(song.uri, { shouldPlay: isPlaying }, onPlaybackStatusUpdate);
         setSound(sound);
         await sound.playAsync();
     };
 
     const onPlayPausePress = async () => {
-        if (!song) {
+        if (!sound) {
             return;
         }
 
@@ -55,7 +71,16 @@ const PlayerWidget = () => {
         return (position / duration) * 100;
     };
 
-    return (
+    // useEffect(() => {
+    //     console.log(getProgress());
+    //     const id = songId;
+    //     if (getProgress() === 100) {
+    //         id++;
+    //         setSongId(id);
+    //     }
+    // }, [getProgress()]);
+
+    return song ? (
         <View style={styles.container}>
             <Image style={styles.image} source={song.imageUri} />
             <View style={styles.wrapper}>
@@ -94,7 +119,7 @@ const PlayerWidget = () => {
 
             <View style={[styles.progress, { width: `${getProgress()}%` }]} />
         </View>
-    );
+    ) : null;
 };
 
 export default PlayerWidget;
