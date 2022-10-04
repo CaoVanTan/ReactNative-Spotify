@@ -20,5 +20,6 @@ export default {
         tabIconDefault: '#b3b3b3',
         tabIconSelected: '#fff',
         green: '#1eb856',
+        disable: '#737373',
     },
 };

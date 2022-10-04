@@ -1,13 +1,12 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
 
 import Colors from '../../constants/Colors';
 import { AppContext } from '../../../AppContext';
 import AlbumDetails from '../../data/AlbumDetails';
 import ModalPlayer from '../ModalPlayer/ModalPlayer';
-import AlbumCategories from '../../data/AlbumCategories';
 
 const PlayerWidget = () => {
     const [favourite, setFavourite] = useState(false);
@@ -16,7 +15,7 @@ const PlayerWidget = () => {
     const [duration, setDuration] = useState(undefined);
     const [position, setPosition] = useState(undefined);
     const [song, setSong] = useState(null);
-    const { songId, setSongId } = useContext(AppContext);
+    const { songId } = useContext(AppContext);
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
