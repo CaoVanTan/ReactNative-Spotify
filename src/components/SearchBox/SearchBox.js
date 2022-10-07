@@ -3,19 +3,23 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 
-const Search = (props) => {
-    const { type, placeholder, onPress, style } = props;
+const SearchBox = (props) => {
+    const { type, placeholder, onPress, style, styleText } = props;
 
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.container, style]}>
-                <Feather name="search" size={20} color={Colors.dark.text} />
+                <Feather
+                    name="search"
+                    size={type == 'disable-light' ? 24 : 20}
+                    color={type == 'disable-light' ? Colors.dark.background : Colors.dark.text}
+                />
                 <TextInput
-                    style={styles.textInput}
+                    style={[styles.textInput, styleText]}
                     placeholder={placeholder}
-                    placeholderTextColor={Colors.dark.text}
+                    placeholderTextColor={type == 'disable-light' ? '#545454' : Colors.dark.text}
                     selectionColor={Colors.dark.green}
-                    editable={type == 'disable' ? false : true}
+                    editable={type == 'disable' || 'disable-light' ? false : true}
                     autoFocus
                 />
             </View>
@@ -23,7 +27,7 @@ const Search = (props) => {
     );
 };
 
-export default Search;
+export default SearchBox;
 
 const styles = StyleSheet.create({
     container: {

@@ -12,12 +12,10 @@ const { width } = Dimensions.get('window');
 
 const ModalPlayer = (props) => {
     const { song, visible, setModalVisible } = props;
-    const [favourite, setFavourite] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
     const [isRandom, setIsRandom] = useState(false);
     const [isRepeat, setIsRepeat] = useState(false);
     const [songIndex, setSongIndex] = useState(0);
-    const { songId } = useContext(AppContext);
+    const { songId, favourite, setFavourite, isPlaying, setIsPlaying } = useContext(AppContext);
     const scrollX = useRef(new Animated.Value(0)).current;
     const songSlider = useRef(null);
 

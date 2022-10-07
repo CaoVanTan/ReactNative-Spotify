@@ -31,7 +31,6 @@ const Home = ({ navigation }) => {
 
             <View style={styles.wrapper}>
                 <FlatList
-                    // style={{ marginBottom: 64 }}
                     keyExtractor={(item) => item.id}
                     data={AlbumCategories}
                     renderItem={({ item }) => (

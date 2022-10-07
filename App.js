@@ -7,12 +7,18 @@ import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 
 export default function App() {
     const [songId, setSongId] = useState(null);
+    const [favourite, setFavourite] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
 
     return (
         <AppContext.Provider
             value={{
                 songId,
                 setSongId: (id) => setSongId(id),
+                favourite,
+                setFavourite: (favourite) => setFavourite(favourite),
+                isPlaying,
+                setIsPlaying: (isPlaying) => setIsPlaying(isPlaying),
             }}
         >
             <NavigationContainer>

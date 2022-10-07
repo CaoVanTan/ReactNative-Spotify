@@ -9,13 +9,11 @@ import AlbumDetails from '../../data/AlbumDetails';
 import ModalPlayer from '../ModalPlayer/ModalPlayer';
 
 const PlayerWidget = () => {
-    const [favourite, setFavourite] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
     const [sound, setSound] = useState(undefined);
     const [duration, setDuration] = useState(undefined);
     const [position, setPosition] = useState(undefined);
     const [song, setSong] = useState(null);
-    const { songId } = useContext(AppContext);
+    const { songId, favourite, setFavourite, isPlaying, setIsPlaying } = useContext(AppContext);
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
@@ -72,15 +70,6 @@ const PlayerWidget = () => {
 
         return (position / duration) * 100;
     };
-
-    // useEffect(() => {
-    //     console.log(getProgress());
-    //     const id = songId;
-    //     if (getProgress() === 100) {
-    //         id++;
-    //         setSongId(id);
-    //     }
-    // }, [getProgress()]);
 
     return song ? (
         <View>

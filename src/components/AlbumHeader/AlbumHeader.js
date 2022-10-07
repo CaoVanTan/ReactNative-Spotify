@@ -5,72 +5,22 @@ import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 
 import Colors from '../../constants/Colors';
-import Search from '../Search/Search';
+import SearchBox from '../SearchBox/SearchBox';
 import Button from '../Button/Button';
 import { AppContext } from '../../../AppContext';
 
 const AlbumHeader = (props) => {
     const { imageUri, artists, time } = props;
     const navigation = useNavigation();
-    const [favourite, setFavourite] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    // const [sound, setSound] = useState(undefined);
-    // const [song, setSong] = useState(null);
-    // const { songId, setSongId } = useContext(AppContext);
+    const { favourite, setFavourite, isPlaying, setIsPlaying } = useContext(AppContext);
 
     const text = artists.slice(-22);
     const artist = artists.slice(0, -22);
 
-    // useEffect(() => {
-    //     return sound
-    //         ? () => {
-    //               sound.unloadAsync();
-    //           }
-    //         : undefined;
-    // }, [sound]);
-
-    // useEffect(() => {
-    //     AlbumDetails.songs.map((item) => {
-    //         if (item.id === songId) {
-    //             setSong(item);
-    //             return item;
-    //         }
-    //     });
-    // }, [songId]);
-
-    // useEffect(() => {
-    //     if (song) {
-    //         playCurrentSong();
-    //     }
-    // }, [song]);
-
-    // const onPlaybackStatusUpdate = (status) => {
-    //     setIsPlaying(status.isPlaying);
-    // };
-
-    // const playCurrentSong = async () => {
-    //     const { sound } = await Audio.Sound.createAsync(song.uri, { shouldPlay: isPlaying }, onPlaybackStatusUpdate);
-    //     setSound(sound);
-    //     await sound.playAsync();
-    // };
-
-    // const onPlayPausePress = async () => {
-    //     setSongId(1);
-    //     if (!sound) {
-    //         return;
-    //     }
-
-    //     if (isPlaying) {
-    //         await sound.stopAsync();
-    //     } else {
-    //         playCurrentSong();
-    //     }
-    // };
-
     return (
         <View style={styles.container}>
             <View style={{ flexDirection: 'row' }}>
-                <Search
+                <SearchBox
                     type="disable"
                     placeholder="Tìm trong danh sách phát"
                     onPress={() => navigation.navigate('SearchPlaylistScreen')}
