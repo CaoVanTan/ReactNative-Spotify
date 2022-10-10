@@ -4,20 +4,20 @@ import Colors from '../../constants/Colors';
 
 const width = Dimensions.get('screen').width / 2 - 24;
 
-const CardSearch = (props) => {
-    const { title, style } = props;
+const SearchCategory = (props) => {
+    const { title, style, imageUri, onPress } = props;
 
     return (
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
             <View style={[styles.container, style]}>
                 <Text style={styles.title}>{title}</Text>
-                <Image style={styles.image} source={require('../../../assets/search/podcast.jpg')} />
+                <Image style={styles.image} source={imageUri} />
             </View>
         </TouchableOpacity>
     );
 };
 
-export default CardSearch;
+export default SearchCategory;
 
 const styles = StyleSheet.create({
     container: {

@@ -10,7 +10,7 @@ const HeaderBack = (props) => {
     const navigation = useNavigation();
     return (
         <View style={[styles.container, style]}>
-            <TouchableOpacity style={{ marginRight: 32 }} activeOpacity={0.5} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={{ marginRight: 24 }} activeOpacity={0.5} onPress={() => navigation.goBack()}>
                 <AntDesign name="arrowleft" size={28} color="white" />
             </TouchableOpacity>
             {title ? <Text style={styles.title}>{title}</Text> : null}

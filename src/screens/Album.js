@@ -21,7 +21,7 @@ const Album = (props) => {
                 ListHeaderComponent={() => (
                     <LinearGradient colors={['#535353', '#121212']}>
                         <HeaderBack title={title} />
-                        <AlbumHeader imageUri={imageUri} artists={artists} time={time} />
+                        <AlbumHeader imageUri={imageUri} artists={artists} time={time} songs={songs} />
                     </LinearGradient>
                 )}
             />

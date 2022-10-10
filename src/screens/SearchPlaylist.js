@@ -1,11 +1,13 @@
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import React from 'react';
 
 import Colors from '../constants/Colors';
 import HeaderBack from '../components/Header/HeaderBack';
 import SearchBox from '../components/SearchBox/SearchBox';
+import SongItem from '../components/SongItem/SongItem';
 
-const SearchPlaylist = () => {
+const SearchPlaylist = ({ route }) => {
+    const { songs } = route.params;
     return (
         <View style={styles.container}>
             <HeaderBack style={{ backgroundColor: '#31322d', paddingVertical: 8 }}>
@@ -15,6 +17,13 @@ const SearchPlaylist = () => {
                     onPress={() => console.log('hello')}
                 />
             </HeaderBack>
+
+            <FlatList
+                style={{ paddingBottom: 16, paddingTop: 16 }}
+                data={songs}
+                renderItem={({ item }) => <SongItem song={item} />}
+                keyExtractor={(item) => item.id}
+            />
         </View>
     );
 };

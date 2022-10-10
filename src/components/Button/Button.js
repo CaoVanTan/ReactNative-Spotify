@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     },
     round: {
         marginHorizontal: 4,
-        marginTop: 16,
+        marginTop: 24,
+        marginBottom: 12,
         paddingHorizontal: 12,
         paddingVertical: 6,
         borderRadius: 16,

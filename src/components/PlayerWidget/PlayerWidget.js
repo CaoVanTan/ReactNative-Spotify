@@ -98,7 +98,12 @@ const PlayerWidget = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={{ marginHorizontal: 12, width: 22, justifyContent: 'center', alignItems: 'center' }}
+                            style={{
+                                marginHorizontal: 12,
+                                width: 22,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
                             activeOpacity={0.4}
                             onPress={onPlayPausePress}
                         >

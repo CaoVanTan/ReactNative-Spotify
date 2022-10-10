@@ -17,7 +17,7 @@ const Album = (props) => {
                     id: data.id,
                     title: data.name,
                     imageUri: data.imageUri,
-                    artists: data.artists,
+                    artists: data.artists || data.author,
                     time: data.time,
                     songs: data.songs,
                 })
@@ -30,9 +30,9 @@ const Album = (props) => {
                         {data.job}
                     </Text>
                 )}
-                {data.name && (
+                {(data.name || data.title) && (
                     <Text style={[styles.name, { width: size }]} numberOfLines={1} ellipsizeMode="tail">
-                        {data.name}
+                        {data.name || data.title}
                     </Text>
                 )}
                 <Text style={[styles.artist, { width: size }]} numberOfLines={2} ellipsizeMode="tail">

@@ -19,7 +19,7 @@ const SearchBox = (props) => {
                     placeholder={placeholder}
                     placeholderTextColor={type == 'disable-light' ? '#545454' : Colors.dark.text}
                     selectionColor={Colors.dark.green}
-                    editable={type == 'disable' || 'disable-light' ? false : true}
+                    editable={type == 'disable' || type == 'disable-light' ? false : true}
                     autoFocus
                 />
             </View>

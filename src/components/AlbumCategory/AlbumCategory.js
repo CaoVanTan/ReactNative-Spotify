@@ -4,11 +4,11 @@ import React from 'react';
 import Album from '../Album/Album';
 
 const AlbumCategory = (props) => {
-    const { title, albums, style } = props;
+    const { title, albums, style, styleTitle } = props;
 
     return (
         <View style={[styles.wrapper, style]}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={[styles.title, styleTitle]}>{title}</Text>
             <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}

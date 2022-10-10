@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
 import React from 'react';
+import { StyleSheet, Text, View, StatusBar, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
 import Header from '../components/Header/Header';
 import SearchBox from '../components/SearchBox/SearchBox';
-import CardSearch from '../components/CardSearch/CardSearch';
+import SearchCategory from '../components/SearchCategory/SearchCategory';
 import SearchCategories from '../data/SearchCategories';
 
 const Search = () => {
@@ -20,7 +20,12 @@ const Search = () => {
                 data={SearchCategories}
                 numColumns={2}
                 renderItem={({ item }) => (
-                    <CardSearch title={item.title} style={{ backgroundColor: item.background }} />
+                    <SearchCategory
+                        title={item.title}
+                        style={{ backgroundColor: item.background }}
+                        imageUri={item.imageUri}
+                        onPress={() => navigation.navigate('SearchCategoriesScreen', { categories: item })}
+                    />
                 )}
                 ListHeaderComponent={() => (
                     <View>
@@ -30,7 +35,7 @@ const Search = () => {
                             style={{ marginVertical: 28, marginHorizontal: 8, backgroundColor: Colors.dark.text }}
                             styleText={{ color: Colors.dark.textGray, fontSize: 16 }}
                             placeholder="Bạn muốn nghe gì?"
-                            onPress={() => navigation.navigate('')}
+                            onPress={() => navigation.navigate('SearchMusicScreen')}
                         />
                         <Text style={styles.title}>Duyệt tìm tất cả</Text>
                     </View>

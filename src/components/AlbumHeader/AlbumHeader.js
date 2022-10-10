@@ -10,7 +10,7 @@ import Button from '../Button/Button';
 import { AppContext } from '../../../AppContext';
 
 const AlbumHeader = (props) => {
-    const { imageUri, artists, time } = props;
+    const { imageUri, artists, time, songs } = props;
     const navigation = useNavigation();
     const { favourite, setFavourite, isPlaying, setIsPlaying } = useContext(AppContext);
 
@@ -23,7 +23,7 @@ const AlbumHeader = (props) => {
                 <SearchBox
                     type="disable"
                     placeholder="Tìm trong danh sách phát"
-                    onPress={() => navigation.navigate('SearchPlaylistScreen')}
+                    onPress={() => navigation.navigate('SearchPlaylistScreen', { songs: songs })}
                 />
                 <Button
                     style={{ marginLeft: 8 }}
